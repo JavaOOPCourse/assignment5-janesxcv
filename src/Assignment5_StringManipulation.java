@@ -50,8 +50,12 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Подсчитать количество гласных (a, e, i, o, u)
         int count = 0;
+        for (char c : input.toLowerCase().toCharArray()) {
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                count++;
+            }
+        }
 
         System.out.println("Number of vowels: " + count);
     }
@@ -61,8 +65,7 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Вывести строку в обратном порядке
-        String reversed = "";
+        String reversed = new StringBuilder(input).reverse().toString();
 
         System.out.println(reversed);
     }
@@ -72,8 +75,9 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Проверить, является ли строка палиндромом (игнорировать регистр)
-        boolean isPalindrome = false;
+        String cleaned = input.toLowerCase();
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+        boolean isPalindrome = cleaned.equals(reversed);
 
         System.out.println(isPalindrome ? "Yes" : "No");
     }
@@ -83,8 +87,10 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Подсчитать количество слов в предложении
         int wordCount = 0;
+        if (!sentence.trim().isEmpty()) {
+            wordCount = sentence.trim().split("\\s+").length;
+        }
 
         System.out.println("Number of words: " + wordCount);
     }
@@ -94,8 +100,7 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Удалить все пробелы из строки
-        String noSpaces = "";
+        String noSpaces = input.replace(" ", "");
 
         System.out.println(noSpaces);
     }
@@ -105,10 +110,19 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Преобразовать первую букву каждого слова в заглавную
-        String result = "";
+        String[] words = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            if (!words[i].isEmpty()) {
+                result.append(Character.toUpperCase(words[i].charAt(0)));
+                result.append(words[i].substring(1).toLowerCase());
+            }
+            if (i < words.length - 1) {
+                result.append(" ");
+            }
+        }
 
-        System.out.println(result);
+        System.out.println(result.toString());
     }
 
     // ===================== TASK 7 =====================
@@ -116,8 +130,18 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Найти символ, который встречается чаще всего
         char mostFrequent = ' ';
+        int maxCount = 0;
+        for (char c : input.toCharArray()) {
+            int freq = 0;
+            for (char ch : input.toCharArray()) {
+                if (ch == c) freq++;
+            }
+            if (freq > maxCount) {
+                maxCount = freq;
+                mostFrequent = c;
+            }
+        }
 
         System.out.println("The most frequent character is: " + mostFrequent);
     }
@@ -129,8 +153,14 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter second string: ");
         String str2 = scanner.nextLine();
 
-        // TODO: Проверить, являются ли две строки анаграммами (игнорировать пробелы и регистр)
-        boolean areAnagrams = false;
+        String cleaned1 = str1.toLowerCase().replace(" ", "");
+        String cleaned2 = str2.toLowerCase().replace(" ", "");
+
+        char[] arr1 = cleaned1.toCharArray();
+        char[] arr2 = cleaned2.toCharArray();
+        java.util.Arrays.sort(arr1);
+        java.util.Arrays.sort(arr2);
+        boolean areAnagrams = java.util.Arrays.equals(arr1, arr2);
 
         System.out.println(areAnagrams ? "Yes" : "No");
     }
